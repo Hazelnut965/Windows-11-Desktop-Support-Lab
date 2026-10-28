@@ -103,23 +103,23 @@ No additional RAM allocation was required during the final assessment.
 
 **Initial performance assessment**
 
-![Initial performance](screenshots/08-performance-initial.png)
+![Initial performance](screenshots/08-task-manager-cpu.png)
 
 **Running processes**
 
-![Running processes](screenshots/09-running-processes.png)
+![Running processes](screenshots/09-high-memory-processes.png)
 
 **Startup applications before optimization**
 
-![Startup before](screenshots/10-startup-before.png)
+![Startup before](screenshots/10-startup-apps-before.png)
 
 **Startup applications after optimization**
 
-![Startup after](screenshots/11-startup-after.png)
+![Startup after](screenshots/111-onedrive-startup-disabled.png)
 
 **CPU performance after optimization**
 
-![CPU performance](screenshots/12-performance-after.png)
+![CPU performance](screenshots/12-performance-after-restart.png)
 
 **Final memory diagnostics**
 
