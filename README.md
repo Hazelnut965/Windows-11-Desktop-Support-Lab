@@ -67,3 +67,68 @@ Installed VMware Tools 13.1.0, allowing Windows to recognize the vmxnet3 Etherne
 
 ## Project Status
 In progress. Additional Windows desktop support troubleshooting cases will be added.
+## Case 02: Windows 11 Performance and Startup Optimization
+
+### Problem
+During a Windows 11 virtual machine performance assessment, Task Manager showed high memory utilization of approximately 85%. The objective was to investigate resource usage, review startup applications, and evaluate opportunities to improve system performance.
+
+### Troubleshooting Steps
+1. Opened Task Manager and reviewed CPU, memory, disk, and GPU utilization.
+2. Inspected running processes to identify resource usage.
+3. Reviewed startup applications and their startup impact.
+4. Identified Microsoft OneDrive as an enabled startup application with High startup impact.
+5. Disabled OneDrive from startup while keeping Windows Security and VMware Tools services enabled.
+6. Reviewed CPU and memory utilization again.
+7. Opened File Explorer and Settings and switched between applications to verify responsiveness.
+
+### Findings
+- Initial memory utilization reached approximately 85% of the allocated 4 GB.
+- OneDrive was enabled with High startup impact.
+- Later memory utilization was approximately 60%, with 2.4 GB in use and 1.6 GB available.
+- CPU utilization was approximately 8% during the later assessment.
+
+### Resolution
+Disabled OneDrive from automatically launching at startup to reduce unnecessary startup activity in the lab environment.
+
+No additional RAM allocation was required during the final assessment.
+
+### Verification
+- Windows 11 opened applications and switched between them smoothly.
+- Task Manager showed approximately 60% memory utilization during the final assessment.
+- No significant responsiveness issues were observed during the final application test.
+
+**Note:** The reduction in observed memory utilization cannot be attributed solely to disabling OneDrive without a controlled before-and-after comparison.
+
+### Screenshots
+
+**Initial performance assessment**
+
+![Initial performance](screenshots/08-performance-initial.png)
+
+**Running processes**
+
+![Running processes](screenshots/09-running-processes.png)
+
+**Startup applications before optimization**
+
+![Startup before](screenshots/10-startup-before.png)
+
+**Startup applications after optimization**
+
+![Startup after](screenshots/11-startup-after.png)
+
+**CPU performance after optimization**
+
+![CPU performance](screenshots/12-performance-after.png)
+
+**Final memory diagnostics**
+
+![Memory diagnostics](screenshots/13-memory-diagnostics.png)
+
+### Skills Demonstrated
+- Windows 11 performance troubleshooting
+- Task Manager resource monitoring
+- CPU and memory utilization analysis
+- Startup application management
+- System responsiveness verification
+- IT support troubleshooting documentation
