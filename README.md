@@ -282,3 +282,162 @@ Result: `IT Support Lab - Test File`
 Successfully configured and tested read-only access for a standard Windows user. HelpDeskUser could open and read the protected file but could not create new files or modify existing files inside the protected folder.
 
 ---
+
+---
+
+## Case 04: Windows Update & Event Viewer – System Health Assessment
+
+### Objective
+
+Assess Windows 11 system health by reviewing update history, examining system event logs, and investigating recurring errors to determine whether corrective action is necessary.
+
+### Lab Environment
+
+- Windows 11 ARM virtual machine
+- VMware Fusion on Apple Silicon Mac
+- Windows Update
+- Event Viewer
+- Registry Editor
+- Command Prompt
+
+### Scenario
+
+Performed a routine Windows system health assessment to identify potential update failures and system errors.
+
+Although the virtual machine was functioning normally, Event Viewer contained multiple DistributedCOM errors requiring further investigation.
+
+### Troubleshooting Steps
+
+**1. Checked Windows Update**
+
+Opened Settings > Windows Update and checked the current update status.
+
+Windows reported that the system was up to date, with an optional Windows 11 version 26H2 feature update available.
+
+**2. Reviewed update history**
+
+Inspected the installed quality, driver, and definition updates.
+
+The visible update history showed five successful installations, including Windows security updates, a .NET Framework update, an audio driver update, and Microsoft Defender updates.
+
+No failed installations were visible.
+
+**3. Examined system logs**
+
+Opened Event Viewer using:
+
+```cmd
+eventvwr.msc
+```
+
+Navigated to Windows Logs > System.
+
+Reviewed informational, warning, and error events.
+
+**4. Investigated DistributedCOM Event ID 10010**
+
+Identified the following error:
+
+```text
+The server did not register with DCOM within the required timeout.
+```
+
+DCOM registration timeouts occur when a software component does not register within the expected time.
+
+**5. Checked component registration**
+
+Investigated a GUID referenced in one of the DCOM errors using Registry Editor and the following command:
+
+```cmd
+reg query "HKCR\CLSID\{8CFC164F-4BE5-4FDD-94E9-E2AF73ED4A19}"
+```
+
+The command returned an error indicating that the specified registry key could not be found at that location.
+
+No registry modifications were made.
+
+**6. Filtered recurring errors**
+
+Used Event Viewer's Filter Current Log feature to display Event ID 10010.
+
+Found four recorded occurrences across October 27 and October 29, 2026.
+
+**7. Compared affected components**
+
+Reviewed multiple DCOM timeout messages, including events referencing:
+
+- Microsoft.AAD.BrokerPlugin
+- Microsoft.Windows.ContentDeliveryManager
+- A component identified by a GUID
+
+This demonstrated that events sharing the same Event ID did not necessarily involve the same software component.
+
+**8. Assessed system impact**
+
+Checked whether the Windows virtual machine exhibited noticeable symptoms.
+
+The system was operating normally without reported crashes, freezing, or application failures.
+
+### Findings
+
+| Diagnostic Area | Finding |
+|---|---|
+| Windows Update | No failed installations visible |
+| Update history | Five successful updates |
+| Event Viewer | Four DistributedCOM Event ID 10010 errors |
+| Registry investigation | Referenced CLSID not found at the checked location |
+| System functionality | Operating normally |
+| Corrective action | No immediate repair required |
+
+### Resolution / Outcome
+
+The investigation identified recurring DCOM registration timeout events, but no corresponding user-facing symptoms were observed.
+
+The underlying causes of the timeouts were not established.
+
+No registry or DCOM configuration changes were made because there was insufficient evidence that intervention was necessary.
+
+The recommended approach was to document the findings and investigate further if related symptoms appeared.
+
+### Screenshots
+
+**Windows Update Assessment**
+
+![Windows Update status](screenshots/29-windows-update-status.png)
+
+![Windows Update history](screenshots/30-windows-update-history.png)
+
+**Event Viewer Investigation**
+
+![System event logs](screenshots/31-event-viewer-system-logs.png)
+
+![DistributedCOM Event ID 10010](screenshots/32-event-viewer-error-1010.png)
+
+![DCOM component investigation](screenshots/33-dcom-component-investigation.png)
+
+![DCOM error frequency](screenshots/34-dcom-error-frequency.png)
+
+**Error Comparison**
+
+![Content Delivery Manager timeout](screenshots/35-dcom-content-delivery-timeout.png)
+
+![GUID-based DCOM timeout](screenshots/36-dcom-guid-timeout.png)
+
+### Skills Demonstrated
+
+- Windows Update diagnostics
+- Windows Event Viewer
+- System log analysis
+- Event ID filtering
+- DCOM error investigation
+- Registry inspection
+- Command Prompt troubleshooting
+- System health assessment
+- Risk-based troubleshooting decisions
+- Technical documentation
+
+### Key Takeaway
+
+Not every error recorded in Event Viewer requires immediate corrective action. Effective IT support involves evaluating the evidence, checking for user-facing symptoms, and avoiding unnecessary configuration changes.
+
+---
