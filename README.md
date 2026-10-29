@@ -65,8 +65,8 @@ Installed VMware Tools 13.1.0, allowing Windows to recognize the vmxnet3 Etherne
 - DNS resolution testing
 - Technical documentation
 
-## Project Status
-In progress. Additional Windows desktop support troubleshooting cases will be added.
+
+
 ## Case 02: Windows 11 Performance and Startup Optimization
 
 ### Problem
@@ -115,7 +115,7 @@ No additional RAM allocation was required during the final assessment.
 
 **Startup applications after optimization**
 
-![Startup after](screenshots/111-onedrive-startup-disabled.png)
+![Startup after](screenshots/11-onedrive-startup-disabled.png)
 
 **CPU performance after optimization**
 
