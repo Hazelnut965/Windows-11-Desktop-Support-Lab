@@ -132,3 +132,153 @@ No additional RAM allocation was required during the final assessment.
 - Startup application management
 - System responsiveness verification
 - IT support troubleshooting documentation
+
+
+
+---
+
+## Case 03: Windows User Accounts & NTFS File Permissions
+
+### Objective
+Create a local standard user account and configure NTFS permissions to allow read access while preventing unauthorized file modifications.
+
+### Lab Environment
+- Windows 11 ARM virtual machine
+- VMware Fusion on Apple Silicon Mac
+- Administrator account: Nishat
+- Standard account: HelpDeskUser
+- Protected folder: `C:\IT-Department`
+- Test file: `Confidential-Test.txt`
+
+### Steps Performed
+1. Created a local standard user account named `HelpDeskUser`.
+2. Created the `C:\IT-Department` folder and a confidential test file.
+3. Inspected the original NTFS permissions.
+4. Configured folder permissions using Windows Security settings.
+5. Granted HelpDeskUser Read & execute access while retaining Full Control for administrators and SYSTEM.
+6. Encountered access-denied errors while applying permissions.
+7. Investigated the configuration using an elevated Command Prompt and `icacls`.
+8. Signed in as HelpDeskUser to verify the effective permissions.
+9. Tested file creation, modification, and read access.
+
+### NTFS Permission Configuration
+
+| Account | Permission |
+|---|---|
+| Administrators | Full Control |
+| SYSTEM | Full Control |
+| Nishat | Full Control |
+| HelpDeskUser | Read & execute |
+
+### Troubleshooting
+
+**Issue 1: Access-denied errors**
+
+Encountered permission-related errors while configuring the protected folder. Investigated the issue using Windows Security settings and Command Prompt.
+
+Verified the resulting permissions with:
+
+```cmd
+icacls "C:\IT-Department"
+```
+
+**Issue 2: Notepad appeared to retain changes**
+
+Notepad displayed unsaved edits when reopened, making it appear that HelpDeskUser could modify the protected file.
+
+Used direct Command Prompt tests to distinguish application session recovery from changes actually written to the file.
+
+### Verification Results
+
+**1. Confirmed the logged-in user**
+
+```cmd
+whoami
+```
+
+Result: `desktop-a7l6fek\helpdeskuser`
+
+**2. Verified file permissions**
+
+```cmd
+icacls "C:\IT-Department\Confidential-Test.txt"
+```
+
+Result: HelpDeskUser had Read & execute `(RX)` access.
+
+**3. Tested creating a file**
+
+```cmd
+echo Permission test > "C:\IT-Department\write-test.txt"
+```
+
+Result: `Access is denied.`
+
+**4. Tested modifying the existing file**
+
+```cmd
+echo Modified by HelpDeskUser >> "C:\IT-Department\Confidential-Test.txt"
+```
+
+Result: `Access is denied.`
+
+**5. Tested reading the file**
+
+```cmd
+type "C:\IT-Department\Confidential-Test.txt"
+```
+
+Result: `IT Support Lab - Test File`
+
+### Screenshots
+
+#### User Creation and Initial Permissions
+
+![Standard user created](screenshots/14-standard-user-created.png)
+
+![Original folder permissions](screenshots/15-folder-permissions-before.png)
+
+![Restricted folder permissions](screenshots/16-folder-permissions-restricted.png)
+
+![Initial access-denied error](screenshots/17-access-denied-error.png)
+
+#### NTFS Permission Configuration
+
+![Select HelpDeskUser](screenshots/18-select-helpdesk-user.png)
+
+![Read-only permissions](screenshots/19-read-only-permissions.png)
+
+![Configured folder permissions](screenshots/20-folder-permissions-configured.png)
+
+![Permission application error](screenshots/21-permission-application-error.png)
+
+![Permissions verified with icacls](screenshots/22-permissions-verified-icacls.png)
+
+#### Standard User Testing
+
+![HelpDeskUser opens the file](screenshots/23-helpdesk-read-access-notepad.png)
+
+![Notepad unsaved changes](screenshots/24-notepad-unsaved-changes.png)
+
+![Folder permissions verification](screenshots/25-helpdesk-folder-permissions.png)
+
+![File permissions verification](screenshots/26-helpdesk-file-permissions.png)
+
+![Write access denied](screenshots/27-write-access-denied.png)
+
+![Read access verified](screenshots/28-read-access-verified.png)
+
+### Skills Demonstrated
+- Windows local user account management
+- NTFS file and folder permissions
+- Principle of least privilege
+- Windows access control troubleshooting
+- Command Prompt and `icacls`
+- Standard-user permission testing
+- Technical documentation
+
+### Outcome
+
+Successfully configured and tested read-only access for a standard Windows user. HelpDeskUser could open and read the protected file but could not create new files or modify existing files inside the protected folder.
+
+---
